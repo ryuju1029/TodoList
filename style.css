@@ -1,0 +1,14 @@
+header{
+  display: flex;
+  background-color: cornflowerblue;
+  height: 50px;
+}
+
+.headerContent{
+  margin-left: auto;
+  padding-top: 10px;
+}
+
+.headerContentList{
+  margin-right: 10px;
+}
