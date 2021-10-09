@@ -1,6 +1,7 @@
-<div>
+<link rel="stylesheet" href="style.css">
+<div class="sig">
   <form action="signup_complete.php" method="post">
-    <table align="center" class="signupTable">
+    <table align="center" class="sigTable">
       <tr>
         <th>新規登録</th>
       </tr>
