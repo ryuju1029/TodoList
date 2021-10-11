@@ -1,7 +1,7 @@
 <?php
 require_once('header.php');
 session_start();
-if (empty($_SESSION['id'])) header('Location: signin.php');
+if (empty($_SESSION['id'])) header('Location: top.php');
 ?>
 
 <h1>index</h1>
