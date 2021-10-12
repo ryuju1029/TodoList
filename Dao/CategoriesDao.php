@@ -4,7 +4,7 @@ require_once(__DIR__ . '/../Dto/CategoriesRaw.php');
 
 final class CategoriesDao extends Dao
 {
-  public function createCategories(string $name,int $user_id)
+  public function createCategories(string $name, int $user_id)
   {
     $sql = "INSERT INTO categories(name, user_id) VALUES (:name, :user_id)";
     $stmt = $this->pdo->prepare($sql);
@@ -22,9 +22,9 @@ final class CategoriesDao extends Dao
     $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
-    if($categories == false) return [];
+    if ($categories == false) return [];
     $categoriesRaws = [];
-    foreach($categories as $category){
+    foreach ($categories as $category) {
       $categoriesRaws[] = new CategoriesRaws(
         $category['id'],
         $category['name'],
@@ -34,7 +34,43 @@ final class CategoriesDao extends Dao
       );
     }
     return $categoriesRaws;
-  }  
+  }
 
+  public function findById(int $id)
+  {
+    $sql = "SELECT * FROM categories WHERE id = :id";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->bindValue(':id', $id);
+    $stmt->execute();
+    $category = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($category === false) return null;
+
+    return new CategoriesRaws(
+      $category['id'],
+      $category['name'],
+      $category['user_id'],
+      $category['created_at'],
+      $category['update_at']
+    );
+  }
+
+  public function update($name,$id)
+  {
+    $sql = "UPDATE categories SET name = :name WHERE id = :id";
+    $stmt = $this->pdo->prepare($sql);
+    $params = array(':name' => $name, ':id' => $id);
+    $stmt->execute($params);
+  }
+
+  public function delete(int $id)
+  {
+    $sql = "DELETE FROM categories WHERE id = :id";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->bindValue(':id', $id);
+    $stmt->execute();
+  }
+
+  
 
 }
