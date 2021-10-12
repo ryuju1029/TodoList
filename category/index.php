@@ -5,26 +5,28 @@ session_start();
 $user_id = $_SESSION['id'];
 $CategoriesDao = new CategoriesDao();
 $Categories = $CategoriesDao->findAll($user_id);
-
 ?>
+<link rel="stylesheet" href="/ToDo/style.css">
 
-<table>
+<div class="homeDody">
   <form action="/ToDo/category/registrationCategory.php" method="post">
-    <tr>
-      <td colspan="3">
-        <h1>カテゴリ一覧</h1>
-      </td>
-    </tr>
-    <tr>
-      <td><input type="text" name="name" placeholder="カテゴリー追加" style="width:100px;"></td>
-      <td><button type="submit" name="button">追加</button></td>
-    </tr>
-    <?php foreach ($Categories as $Category) : ?>
+    <table align="center" class="categoryTable">
       <tr>
-        <td><?php echo $Category->name() ;?></td>
-        <td>編集</td>
-        <td>削除</td>
+        <td colspan="3">
+          <h1>カテゴリ一覧</h1>
+        </td>
       </tr>
-    <?php endforeach; ?>
+      <tr>
+        <td><input type="text" name="name" placeholder="カテゴリー追加" style="width:100px;"></td>
+        <td><button type="submit" name="button">追加</button></td>
+      </tr>
+      <?php foreach ($Categories as $Category) : ?>
+        <tr>
+          <td><?php echo $Category->name(); ?></td>
+          <td><a href="edit.php?id=<?php echo $Category->id() ?>">編集</a></td>
+          <td><a href="delete.php?id=<?php echo $Category->id() ?>">削除</a></td>
+        </tr>
+      <?php endforeach; ?>
   </form>
-</table>
+  </table>
+</div>

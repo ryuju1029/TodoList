@@ -15,12 +15,12 @@ header{
 }
 
 .sigTable{
- width: 300px;
-    padding: 10px;
-    box-sizing: border-box;
-    border: 1px solid #68779a;
-    background: #cbe8fa;
-    cursor: pointer;
+  width: 300px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #68779a;
+  background: #cbe8fa;
+  cursor: pointer;
 }
 
 .sigContent{
@@ -28,5 +28,9 @@ header{
 }
 
 .sig{
+  padding-top: 100px;
+}
+
+.homeDody{
   padding-top: 100px;
 }
