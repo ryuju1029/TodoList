@@ -55,6 +55,25 @@ final class CategoriesDao extends Dao
     );
   }
 
+  public function findByName(string $name)
+  {
+    $sql = "SELECT * FROM categories WHERE name = :name";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->bindValue(':name', $name);
+    $stmt->execute();
+    $category = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($category === false) return null;
+
+    return new CategoriesRaws(
+      $category['id'],
+      $category['name'],
+      $category['user_id'],
+      $category['created_at'],
+      $category['update_at']
+    );
+  }
+
   public function update($name,$id)
   {
     $sql = "UPDATE categories SET name = :name WHERE id = :id";
