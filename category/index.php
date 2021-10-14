@@ -1,10 +1,10 @@
 <?php
 require_once(__DIR__ . '/../header.php');
-require_once(__DIR__ . '/../Dao/CategoriesDao.php');
+require_once(__DIR__ . '/../Dao/CategoryDao.php');
 session_start();
 $user_id = $_SESSION['id'];
-$CategoriesDao = new CategoriesDao();
-$Categories = $CategoriesDao->findAll($user_id);
+$CategoryDao = new CategoryDao();
+$Categories = $CategoryDao->findAll($user_id);
 ?>
 <link rel="stylesheet" href="/ToDo/style.css">
 

@@ -1,10 +1,10 @@
 <?php
 require_once(__DIR__ . '/../header.php');
-require_once(__DIR__ . '/../Dao/CategoriesDao.php');
+require_once(__DIR__ . '/../Dao/CategoryDao.php');
 $id = filter_input(INPUT_GET, "id");
 $name = filter_input(INPUT_GET, "name");
-$CategoriesDao = new CategoriesDao();
-$category = $CategoriesDao->findById($id);
+$CategoryDao = new CategoryDao();
+$category = $CategoryDao->findById($id);
 ?>
 <link rel="stylesheet" href="/ToDo/style.css">
 <div class="homeDody">

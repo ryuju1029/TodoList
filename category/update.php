@@ -1,7 +1,8 @@
 <?php
-require_once(__DIR__ . '/../Dao/CategoriesDao.php');
+require_once(__DIR__ . '/../Dao/CategoryDao.php');
+require_once(__DIR__ . '/../Lib/Redirect.php');
 $id = filter_input(INPUT_POST, "id");
 $name = filter_input(INPUT_POST, "name");
-$CategoriesDao = new CategoriesDao();
-$CategoriesDao->update($name,$id);
-header('Location: /ToDo/category/index.php');
+$CategoryDao = new CategoryDao();
+$CategoryDao->update($name,$id);
+Redirect::handler('/ToDo/category/index.php');

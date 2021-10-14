@@ -14,9 +14,19 @@ final class UserDao extends Dao
     return ($user === false) ? null : $user;
   }
 
-  public function createUser(string $name, string $email, string $password)
+  public function createUser
+  (
+    string $name, 
+    string $email, 
+    string $password
+  )
   {
-    $sql = "INSERT INTO users(name, email, password) VALUES (:name, :email, :password)";
+    $sql = <<<EOF
+    "INSERT INTO 
+    users(name, email, password) 
+    VALUES 
+    (:name, :email, :password)";
+    EOF;
     $stmt = $this->pdo->prepare($sql);
     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
     $stmt->bindValue(':name', $name);
