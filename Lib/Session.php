@@ -2,8 +2,10 @@
 
 final class Session
 {
-    const ERROR_KEY = 'errors';
-
+    const ERROR_NAME_KEY = 'errorsName';
+    const ERROR_EMAIL_KEY = 'errorsEmail';
+    const ERROR_PASSWORD_KEY = 'errorsPassword';
+    const ERROR_PASSWORD_CONFIRM_KEY = 'errorsPasswordConfirm';
     private static $instance;
 
 
@@ -31,26 +33,75 @@ final class Session
         unset($_SESSION[$key]);
     }
     
-    public function getErrors(): array
+    public function getErrorsName(): ?string
     {
-        // $_SESSION['errors']を取得する処理
-        $errors = $this->get(self::ERROR_KEY);
-        return empty($errors) ? [] : $errors;
+        $errors = $this->get(self::ERROR_NAME_KEY);
+        return empty($errors) ? null : $errors;
     }
 
-    public function destroyErrors(): void
+    public function getErrorsEmail(): ?string
     {
-        $this->destroy(self::ERROR_KEY);
+        $errors = $this->get(self::ERROR_EMAIL_KEY);
+        return empty($errors) ? null : $errors;
     }
 
-    public function getErrorsWithDestroy(): array
+    public function getErrorsPassword(): ?string
     {
-        // $errors = $_SESSION['errors'];
-        $errors = $this->getErrors();
+        $errors = $this->get(self::ERROR_PASSWORD_KEY);
+        return empty($errors) ? null : $errors;
+    }
 
-        // unset($_SESSION['errors']);
-        $this->destroyErrors();
+    public function getErrorsPasswordConfirm(): ?string
+    {
+        $errors = $this->get(self::ERROR_PASSWORD_CONFIRM_KEY);
+        return empty($errors) ? null : $errors;
+    }
 
+    public function destroyErrorsName(): void
+    {
+        $this->destroy(self::ERROR_NAME_KEY);
+    }
+
+    public function destroyErrorsEmail(): void
+    {
+        $this->destroy(self::ERROR_EMAIL_KEY);
+    }
+
+    public function destroyErrorsPassword(): void
+    {
+        $this->destroy(self::ERROR_PASSWORD_KEY);
+    }
+
+    public function destroyErrorsPasswordConfirm(): void
+    {
+        $this->destroy(self::ERROR_PASSWORD_CONFIRM_KEY);
+    }
+
+    public function getErrorsNameWithDestroy(): ?string
+    {
+        $errors = $this->getErrorsName();
+        $this->destroyErrorsName();
+        return $errors;
+    }
+
+    public function getErrorsEmailWithDestroy(): ?string
+    {
+        $errors = $this->getErrorsEmail();
+        $this->destroyErrorsEmail();
+        return $errors;
+    }
+
+    public function getErrorsPasswordWithDestroy(): ?string
+    {
+        $errors = $this->getErrorsPassword();
+        $this->destroyErrorsPassword();
+        return $errors;
+    }
+
+    public function getErrorsPasswordConfirmWithDestroy(): ?string
+    {
+        $errors = $this->getErrorsPasswordConfirm();
+        $this->destroyErrorsPasswordConfirm();
         return $errors;
     }
 
