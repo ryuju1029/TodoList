@@ -3,7 +3,8 @@ require_once(__DIR__ . '/Lib/Session.php');
 
 session_start();
 $session = Session::getInstance();
-$errors = $session->getErrorsWithDestroy();
+$errorEmail = $session->getErrorsEmailWithDestroy();
+$errorPassword = $session->getErrorsPasswordWithDestroy();
 ?>
 
 <link rel="stylesheet" href="style.css">
@@ -15,13 +16,20 @@ $errors = $session->getErrorsWithDestroy();
       </tr>
       <tr>
         <td align=left>
-          <?php foreach ($errors as $error) : ?>
-            <li><?php echo $error; ?></li>
-          <?php endforeach; ?>
+          <?php if (isset($errorEmail)) : ?>
+            <li><?php echo $errorEmail; ?></li>
+          <?php endif; ?>
         </td>
       </tr>
       <tr>
         <td class="sigContent"><input type="text" name="email" placeholder="Email" style="width:300px;"></td>
+      </tr>
+      <tr>
+        <td align=left>
+          <?php if (isset($errorPassword)) : ?>
+            <li><?php echo $errorPassword; ?></li>
+          <?php endif; ?>
+        </td>
       </tr>
       <tr>
         <td class="sigContent"><input type="password" name="password" placeholder="Password" style="width:300px;"></td>
