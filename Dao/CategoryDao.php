@@ -1,8 +1,8 @@
 <?php
 require_once(__DIR__ . '/Dao.php');
-require_once(__DIR__ . '/../Dto/CategoriesRaw.php');
+require_once(__DIR__ . '/../Dto/CategoryRaw.php');
 
-final class CategoriesDao extends Dao
+final class CategoryDao extends Dao
 {
   public function createCategories(string $name, int $user_id)
   {
@@ -25,7 +25,7 @@ final class CategoriesDao extends Dao
     if ($categories == false) return [];
     $categoriesRaws = [];
     foreach ($categories as $category) {
-      $categoriesRaws[] = new CategoriesRaws(
+      $categoriesRaws[] = new CategoryRaws(
         $category['id'],
         $category['name'],
         $category['user_id'],
@@ -36,7 +36,7 @@ final class CategoriesDao extends Dao
     return $categoriesRaws;
   }
 
-  public function findById(int $id)
+  public function findById(int $id): CategoryRaws
   {
     $sql = "SELECT * FROM categories WHERE id = :id";
     $stmt = $this->pdo->prepare($sql);
@@ -46,7 +46,7 @@ final class CategoriesDao extends Dao
 
     if ($category === false) return null;
 
-    return new CategoriesRaws(
+    return new CategoryRaws(
       $category['id'],
       $category['name'],
       $category['user_id'],
@@ -55,7 +55,7 @@ final class CategoriesDao extends Dao
     );
   }
 
-  public function findByName(string $name)
+  public function findByName(string $name): CategoryRaws
   {
     $sql = "SELECT * FROM categories WHERE name = :name";
     $stmt = $this->pdo->prepare($sql);
@@ -65,7 +65,7 @@ final class CategoriesDao extends Dao
 
     if ($category === false) return null;
 
-    return new CategoriesRaws(
+    return new CategoryRaws(
       $category['id'],
       $category['name'],
       $category['user_id'],

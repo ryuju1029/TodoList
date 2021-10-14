@@ -1,20 +1,31 @@
 <?php
 require_once(__DIR__ . '/Dao/UserDao.php');
-require_once(__DIR__ . '/Dao/CategoriesDao.php');
+require_once(__DIR__ . '/Dao/CategoryDao.php');
 require_once(__DIR__ . '/Dao/TaskDao.php');
+require_once(__DIR__ . '/Lib/Redirect.php');
+
 session_start();
 $user_id = $_SESSION['id'];
 $status = 0;
-$name = filter_input(INPUT_POST, "category");
+$categoryId = filter_input(INPUT_POST, "category");
 $contents = filter_input(INPUT_POST, "contents");
-$deadiine = filter_input(INPUT_POST, "deadiine");
+$deadline = filter_input(INPUT_POST, "deadiine");
 
-$CategoriesDao = new CategoriesDao();
-$Categories = $CategoriesDao->findByName($name);
+if (empty($categoryId)) $errors[] = 'カテゴリーが空です。';
+if (empty($contents)) $errors[] = '内容が空です。';
+if (empty($deadline)) $errors[] = '期限が空です。';
+if (isset($errors)) {
+    $_SESSION['errors'] = $errors;
+    Redirect::handler('/ToDo/create.php');
+}
 
-$category_id = $Categories->id();
-
-$TaskDaoDao = new TaskDao();
-$TaskDaoDao->createTask($user_id,$status,$contents,$category_id, $deadiine);
-header('Location: /ToDo/index.php');
+$TaskDao = new TaskDao();
+$TaskDao->create(
+    $user_id,
+    $status,
+    $contents,
+    $categoryId, 
+    $deadline
+);
+Redirect::handler('/ToDo/index.php');
 

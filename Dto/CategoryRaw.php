@@ -1,6 +1,6 @@
 <?php
 
-final class CategoriesRaws
+final class CategoryRaws
 {
   private $id;
   private $name;
