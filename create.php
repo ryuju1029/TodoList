@@ -5,7 +5,8 @@ require_once(__DIR__ . '/Lib/Session.php');
 session_start();
 
 $session = Session::getInstance();
-$errors = $session->getErrorsWithDestroy();
+$errorContent = $session->getErrorContentWithDestroy();
+$errorDeadline = $session->getErrorDeadlineWithDestroy();
 
 $user_id = $session->get('id');
 
@@ -16,10 +17,6 @@ $categories = $CategoryDao->findAll($user_id);
 <link rel="stylesheet" href="/ToDo/style.css">
 
 <div class="homeDody">
-  <?php foreach ($errors as $error) : ?>
-    <p><?php echo $error; ?></p>
-  <?php endforeach; ?>
-
   <form action="add_task_complete.php" method="post">
     <table align="center">
       <tr>
@@ -28,15 +25,20 @@ $categories = $CategoryDao->findAll($user_id);
         </td>
       </tr>
       <tr>
+        <td></td>
+        <td><?php if (isset($errorContent)) : ?> <li><?php echo $errorContent; ?></li> <?php endif; ?></td>
+        <td><?php if (isset($errorDeadline)) : ?> <li><?php echo $errorDeadline; ?></li> <?php endif; ?></td>
+      </tr>
+      <tr>
         <td>
-          <select name="category">
+          <select name="category_Id">
             <?php foreach ($categories as $category) : ?>
-              <option value="<?php echo $cateogry->id(); ?>"><?php echo $category->name(); ?></option>
+              <option value="<?php echo $category->id(); ?>"><?php echo $category->name(); ?></option>
             <?php endforeach; ?>
           </select>
         </td>
-        <td><input type="text" name="contents" placeholder="タスクを追加" style="width:130px;"></td>
-        <td><input type="date" name="deadiine" style="width:140px;"></td>
+        <td><input type="text" name="contents" placeholder="タスクを追加" style="width:220px;"></td>
+        <td><input type="date" name="deadline" style="width:220px;"></td>
         <td><button type="submit" name="button">追加</button></td>
       </tr>
     </table>

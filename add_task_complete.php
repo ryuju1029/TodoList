@@ -7,15 +7,15 @@ require_once(__DIR__ . '/Lib/Redirect.php');
 session_start();
 $user_id = $_SESSION['id'];
 $status = 0;
-$categoryId = filter_input(INPUT_POST, "category");
+$categoryId = filter_input(INPUT_POST, "category_Id");
 $contents = filter_input(INPUT_POST, "contents");
-$deadline = filter_input(INPUT_POST, "deadiine");
+$deadline = filter_input(INPUT_POST, "deadline");
 
-if (empty($categoryId)) $errors[] = 'カテゴリーが空です。';
-if (empty($contents)) $errors[] = '内容が空です。';
-if (empty($deadline)) $errors[] = '期限が空です。';
-if (isset($errors)) {
-    $_SESSION['errors'] = $errors;
+if (empty($contents)) $errorContent = '内容を入力してください。';
+if (empty($deadline)) $errorDeadline = '期限を入力してください。';
+if (isset($errorContent) || isset($errorDeadline)) {
+    $_SESSION['errorContent'] = $errorContent;
+    $_SESSION['errorDeadline'] = $errorDeadline;
     Redirect::handler('/ToDo/create.php');
 }
 
