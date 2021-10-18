@@ -26,7 +26,7 @@ final class TaskDao extends Dao
     $stmt->execute();
   }
 
-  public function findStatus($status,$user_id)
+  public function findStatus($status, $user_id)
   {
     $sql = "SELECT * FROM tasks JOIN categories ON tasks.category_id = categories.id WHERE tasks.status = :status AND tasks.user_id = :user_id";
     $stmt = $this->pdo->prepare($sql);
@@ -36,7 +36,7 @@ final class TaskDao extends Dao
     $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
     if ($tasks === false) return [];
     $taskRows = [];
-    foreach ($tasks as $task){
+    foreach ($tasks as $task) {
       $taskRows[] = new TaskRaws(
         $task['id'],
         $task['user_id'],
@@ -48,8 +48,23 @@ final class TaskDao extends Dao
         $task['updated_at'],
         $task['name']
       );
-    } 
-    return $taskRows; 
+    }
+    return $taskRows;
   }
 
+  public function update(?string $contents, string $deadline, int $id)
+  {
+    $sql = "UPDATE tasks SET deadline = :deadline, contents = :contents WHERE id = :id";
+    $stmt = $this->pdo->prepare($sql);
+    $params = array(':deadline' => $deadline, ':contents' => $contents, ':id' => $id,);
+    $stmt->execute($params);
+  }
+
+  public function delete(int $id)
+  {
+    $sql = "DELETE FROM tasks WHERE id = :id";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->bindValue(':id', $id);
+    $stmt->execute();
+  }
 }

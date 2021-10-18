@@ -37,23 +37,29 @@ $tasks = $taskDao->findStatus($status, $user_id);
       <td><a>カテゴリー</a></td>
     </tr>
     <?php foreach ($tasks as $task) : ?>
-      <tr>
-        <td><?php echo $task->contents(); ?></td>
-        <td><?php echo $task->deadline(); ?></td>
-        <td><?php echo $task->name(); ?></td>
-        <td>
-          <?php if ($status == 0) : ?>
-            <a>完了</a>
-          <?php endif; ?>
-        </td>
-        <td>
-          <?php if ($status == 1) : ?>
-            <a>未完了</a>
-          <?php endif; ?>
-        </td>
-        <td>編集</td>
-        <td>削除</td>
-      </tr>
+        <tr>
+          <td><?php echo $task->contents(); ?></td>
+          <td><?php echo $task->deadline(); ?></td>
+          <td><?php echo $task->name(); ?></td>
+          <!-- カテゴリーのIDが入ってしまっている -->
+          <td><?php echo $task->id(); ?></td>
+          <td>
+            <?php if ($status == 0) : ?>
+              <a>完了</a>
+            <?php endif; ?>
+          </td>
+          <td>
+            <?php if ($status == 1) : ?>
+              <a>未完了</a>
+            <?php endif; ?>
+          </td>
+
+          <td>
+            <a href="/ToDo/edit.php?id=<?php echo $task->id(); ?>">編集</a>
+          </td>
+          <td>削除</td>
+
+        </tr>
     <?php endforeach; ?>
   </table>
 </div>
