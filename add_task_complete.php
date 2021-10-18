@@ -6,8 +6,7 @@ require_once(__DIR__ . '/Lib/Redirect.php');
 
 session_start();
 $user_id = $_SESSION['id'];
-$status = 0;
-$categoryId = filter_input(INPUT_POST, "category_Id");
+$category_id = filter_input(INPUT_POST, "category_id");
 $contents = filter_input(INPUT_POST, "contents");
 $deadline = filter_input(INPUT_POST, "deadline");
 
@@ -22,9 +21,8 @@ if (isset($errorContent) || isset($errorDeadline)) {
 $TaskDao = new TaskDao();
 $TaskDao->create(
     $user_id,
-    $status,
     $contents,
-    $categoryId, 
+    $category_id, 
     $deadline
 );
 Redirect::handler('/ToDo/index.php');

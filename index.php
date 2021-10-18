@@ -39,8 +39,8 @@ $tasks = $taskDao->findStatus($status, $user_id);
     <?php foreach ($tasks as $task) : ?>
       <tr>
         <td><?php echo $task->contents(); ?></td>
-        <td><?php echo $task->deadiine(); ?></td>
-        <td><?php echo $task->categoryId(); ?></td>
+        <td><?php echo $task->deadline(); ?></td>
+        <td><?php echo $task->name(); ?></td>
         <td>
           <?php if ($status == 0) : ?>
             <a>完了</a>

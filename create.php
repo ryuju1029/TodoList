@@ -31,7 +31,7 @@ $categories = $CategoryDao->findAll($user_id);
       </tr>
       <tr>
         <td>
-          <select name="category_Id">
+          <select name="category_id">
             <?php foreach ($categories as $category) : ?>
               <option value="<?php echo $category->id(); ?>"><?php echo $category->name(); ?></option>
             <?php endforeach; ?>
