@@ -9,7 +9,8 @@ final class TaskRaws
   private $categoryId;
   private $createdAt;
   private $updatedAt;
-  private $deadiine;
+  private $deadline;
+  private $name;
 
   public function __construct(
     int $id,
@@ -17,18 +18,20 @@ final class TaskRaws
     string $status,
     string $contents,
     string $categoryId,
-    string $deadiine,
+    string $deadline,
     string $createdAt,
-    string $updatedAt
+    string $updatedAt,
+    string $name
   ) {
     $this->id = $id;
     $this->email = $userId;
     $this->status = $status;
     $this->contents = $contents;
     $this->categoryId = $categoryId;
-    $this->deadiine = $deadiine;
+    $this->deadline = $deadline;
     $this->createdAt = $createdAt;
     $this->updatedAt = $updatedAt;
+    $this->name = $name;
   }
 
   public function id(): int
@@ -56,9 +59,9 @@ final class TaskRaws
     return $this->categoryId;
   }
 
-  public function deadiine(): string
+  public function deadline(): string
   {
-    return $this->deadiine;
+    return $this->deadline;
   }
 
   public function createdAt(): string
@@ -69,5 +72,10 @@ final class TaskRaws
   public function updatedAt(): string
   {
     return $this->updatedAt;
+  }
+
+  public function name(): string
+  {
+    return $this->name;
   }
 }
