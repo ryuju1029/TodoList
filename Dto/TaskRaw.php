@@ -14,23 +14,24 @@ final class TaskRaws
 
   public function __construct(
     int $id,
-    string $userId,
+    int $userId,
     string $status,
     string $contents,
-    string $categoryId,
+    int $categoryId,
     string $deadline,
     string $createdAt,
     string $updatedAt,
     string $name
   ) {
     $this->id = $id;
-    $this->email = $userId;
+    $this->userId = $userId;
     $this->status = $status;
     $this->contents = $contents;
     $this->categoryId = $categoryId;
     $this->deadline = $deadline;
     $this->createdAt = $createdAt;
     $this->updatedAt = $updatedAt;
+    // TODO: categoryNameにする
     $this->name = $name;
   }
 
@@ -39,12 +40,12 @@ final class TaskRaws
     return $this->id;
   }
 
-  public function userId(): string
+  public function userId(): int
   {
     return $this->userId;
   }
 
-  public function status(): string
+  public function status(): int
   {
     return $this->status;
   }
@@ -54,7 +55,7 @@ final class TaskRaws
     return $this->contents;
   }
 
-  public function categoryId(): string
+  public function categoryId(): int
   {
     return $this->categoryId;
   }

@@ -8,7 +8,7 @@ $status = 0;
 if (isset($_POST['incomplete'])) $status = 0;
 if (isset($_POST['completion'])) $status = 1;
 $taskDao = new TaskDao();
-$tasks = $taskDao->findStatus($status, $user_id);
+$tasks = $taskDao->findAllByStatus($status, $user_id);
 ?>
 
 <link rel="stylesheet" href="/ToDo/style.css">
