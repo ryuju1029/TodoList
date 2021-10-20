@@ -26,15 +26,36 @@ final class TaskDao extends Dao
     $stmt->execute();
   }
 
-  public function findStatus($status, $user_id)
+  public function findAllByStatus($status, $user_id): array
   {
-    $sql = "SELECT * FROM tasks JOIN categories ON tasks.category_id = categories.id WHERE tasks.status = :status AND tasks.user_id = :user_id";
+    $sql = <<<EOF
+      SELECT 
+        t.id,
+        t.user_id,
+        t.contents,
+        t.status,
+        t.deadline,
+        t.created_at,
+        t.updated_at,
+        c.id as category_id,
+        c.name as category_name
+      FROM 
+        tasks t
+      JOIN 
+        categories c 
+      ON t.category_id = c.id 
+      WHERE 
+        t.status = :status 
+        AND t.user_id = :user_id
+EOF;
     $stmt = $this->pdo->prepare($sql);
     $stmt->bindValue(':status', $status);
     $stmt->bindValue(':user_id', $user_id);
     $stmt->execute();
     $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
     if ($tasks === false) return [];
+
     $taskRows = [];
     foreach ($tasks as $task) {
       $taskRows[] = new TaskRaws(
@@ -46,7 +67,7 @@ final class TaskDao extends Dao
         $task['deadline'],
         $task['created_at'],
         $task['updated_at'],
-        $task['name']
+        $task['category_name']
       );
     }
     return $taskRows;

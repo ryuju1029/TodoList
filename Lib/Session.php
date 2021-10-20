@@ -2,14 +2,15 @@
 
 final class Session
 {
+    const ERROR_KEY = 'errors';
     const ERROR_NAME_KEY = 'errorsName';
     const ERROR_EMAIL_KEY = 'errorsEmail';
     const ERROR_PASSWORD_KEY = 'errorsPassword';
     const ERROR_PASSWORD_CONFIRM_KEY = 'errorsPasswordConfirm';
     const ERROR_CONTENT_KEY = 'errorContent';
     const ERROR_DEAD_LINE_KEY = 'errorDeadline';
-    private static $instance;
 
+    private static $instance;
 
     private function __construct()
     {
@@ -17,12 +18,21 @@ final class Session
 
     public static function getInstance(): self
     {
+        self::start();
+
         if (isset(self::$instance)) {
             return self::$instance;
         }
 
         self::$instance = new self();
         return self::$instance;
+    }
+
+    private static function start(): void
+    {
+        if (is_null($_SESSION)) {
+            session_start();
+        }
     }
 
     public function get(string $key)
@@ -35,6 +45,35 @@ final class Session
         unset($_SESSION[$key]);
     }
 
+    public function getErrorsWithDestroy(): array
+    {
+        $errors = $this->getErrors();
+        $this->destroyErrors();
+        return $errors;
+    }
+
+    public function getErrors(): array
+    {
+        $errors = $this->get(self::ERROR_KEY);
+        return empty($errors) ? [] : $errors;
+    }
+
+    public function destroyErrors(): void
+    {
+        $this->destroy(self::ERROR_KEY);
+    }
+
+    public function setErrors(array $errors): void
+    {
+        $_SESSION[self::ERROR_KEY] = $errors;
+    }
+
+    public function setAuth(int $id, string $name): void
+    {
+        
+    }
+
+    // TODO: この下は削除してしまう
     public function getErrorsNameWithDestroy(): ?string
     {
         $errors = $this->getErrorsName();
@@ -143,12 +182,4 @@ final class Session
         $this->destroy(self::ERROR_DEAD_LINE_KEY);
     }
 
-
-
-
-
-    // public function setAuth(int $id, string $name): void
-    // {
-        
-    // }
 }

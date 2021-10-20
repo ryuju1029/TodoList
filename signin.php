@@ -1,10 +1,8 @@
 <?php
 require_once(__DIR__ . '/Lib/Session.php');
 
-session_start();
 $session = Session::getInstance();
-$errorEmail = $session->getErrorsEmailWithDestroy();
-$errorPassword = $session->getErrorsPasswordWithDestroy();
+$errors = $session->getErrorsWithDestroy();
 ?>
 
 <link rel="stylesheet" href="style.css">
@@ -16,8 +14,8 @@ $errorPassword = $session->getErrorsPasswordWithDestroy();
       </tr>
       <tr>
         <td align=left>
-          <?php if (isset($errorEmail)) : ?>
-            <li><?php echo $errorEmail; ?></li>
+          <?php if (isset($errors['email'])) : ?>
+            <li><?php echo $errors['email']; ?></li>
           <?php endif; ?>
         </td>
       </tr>
@@ -26,8 +24,8 @@ $errorPassword = $session->getErrorsPasswordWithDestroy();
       </tr>
       <tr>
         <td align=left>
-          <?php if (isset($errorPassword)) : ?>
-            <li><?php echo $errorPassword; ?></li>
+          <?php if (isset($errors['password'])) : ?>
+            <li><?php echo $errors['password']; ?></li>
           <?php endif; ?>
         </td>
       </tr>
