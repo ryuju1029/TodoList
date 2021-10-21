@@ -7,9 +7,10 @@ $user_id = $_SESSION['id'];
 $status = 0;
 if (isset($_POST['incomplete'])) $status = 0;
 if (isset($_POST['completion'])) $status = 1;
-
 $taskDao = new TaskDao();
-$tasks = $taskDao->findAllByStatus($status, $user_id);
+$contents = filter_input(INPUT_POST, "contents");
+if (!empty($contents)) $tasks = $taskDao->SearchByTask($status, $user_id, $contents);
+if (empty($contents)) $tasks = $taskDao->findAllByStatus($status, $user_id);
 ?>
 
 <link rel="stylesheet" href="/ToDo/style.css">
@@ -20,7 +21,14 @@ $tasks = $taskDao->findAllByStatus($status, $user_id);
       <button type="submit" name="incomplete">未完了</button>
       <button type="submit" name="completion">完了</button>
     </form>
+    <form action="index.php" method="POST">
+      <input type="text" name="contents" placeholder="キーワードを入力">
+      <input type="submit" value="検索">
+    </form>
   </div>
+
+
+
   <form action="updateStatus.php" method="post">
     <table align="center" class="categoryTable">
       <tr>
