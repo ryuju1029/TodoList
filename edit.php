@@ -1,12 +1,17 @@
 <?php
 require_once(__DIR__ . '/Dao/TaskDao.php');
 require_once(__DIR__ . '/Dao/CategoryDao.php');
-$id = filter_input(INPUT_GET, "id");
-//$taskDao = new TaskDao();
-//$task = $taskDao->findById($id);
+require_once(__DIR__ . '/Lib/Session.php');
 
+$id = filter_input(INPUT_GET, "id");
+$taskDao = new TaskDao();
+$task = $taskDao->findById($id);
+
+$session = Session::getInstance();
+$user_id = $session->get('id');
 $CategoryDao = new CategoryDao();
-$categories = $CategoryDao->findAll($id);
+$categories = $CategoryDao->findAll($user_id);
+
 ?>
 <link rel="stylesheet" href="/ToDo/style.css">
 
@@ -19,11 +24,12 @@ $categories = $CategoryDao->findAll($id);
       <td>
         <select name="category_id">
           <?php foreach ($categories as $category) : ?>
-            <option value="<?php echo $category->id(); ?>"><?php echo $category->name(); ?></option>
+            <option value="<?php echo $category->id(); ?>"><?php echo $category->name(); ?>
+            </option>
           <?php endforeach; ?>
         </select>
       </td>
-      <td><input type="text" name="contents" value="<?php if (!empty($task->content())) echo (htmlspecialchars($task->content(), ENT_QUOTES, 'UTF-8')); ?>"></td>
+      <td><input type="text" name="contents" value="<?php if (!empty($task->contents())) echo (htmlspecialchars($task->contents(), ENT_QUOTES, 'UTF-8')); ?>"></td>
       <td><input type="date" name="deadline" value="<?php if (!empty($task->deadline())) echo (htmlspecialchars($task->deadline(), ENT_QUOTES, 'UTF-8')); ?>"></td>
       <td><button type="submit" name="button">追加</button></td>
   </table>
