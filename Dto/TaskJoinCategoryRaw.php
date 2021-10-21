@@ -1,6 +1,6 @@
 <?php
 
-final class TaskRaw
+final class TaskJoinCategoryRaw
 {
   private $id;
   private $userId;
@@ -10,6 +10,7 @@ final class TaskRaw
   private $createdAt;
   private $updatedAt;
   private $deadline;
+  private $categoryName;
 
   public function __construct(
     int $id,
@@ -19,7 +20,8 @@ final class TaskRaw
     int $categoryId,
     string $deadline,
     string $createdAt,
-    string $updatedAt
+    string $updatedAt,
+    string $categoryName
   ) {
     $this->id = $id;
     $this->userId = $userId;
@@ -29,6 +31,7 @@ final class TaskRaw
     $this->deadline = $deadline;
     $this->createdAt = $createdAt;
     $this->updatedAt = $updatedAt;
+    $this->categoryName = $categoryName;
   }
 
   public function id(): int
@@ -69,5 +72,10 @@ final class TaskRaw
   public function updatedAt(): string
   {
     return $this->updatedAt;
+  }
+
+  public function categoryName(): string
+  {
+    return $this->categoryName;
   }
 }

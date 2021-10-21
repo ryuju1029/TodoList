@@ -1,5 +1,6 @@
 <?php
 require_once(__DIR__ . '/Dao.php');
+require_once(__DIR__ . '/../Dto/TaskJoinCategoryRaw.php');
 require_once(__DIR__ . '/../Dto/TaskRaw.php');
 
 final class TaskDao extends Dao
@@ -58,7 +59,7 @@ EOF;
 
     $taskRows = [];
     foreach ($tasks as $task) {
-      $taskRows[] = new TaskRaws(
+      $taskRows[] = new TaskJoinCategoryRaw(
         $task['id'],
         $task['user_id'],
         $task['status'],
@@ -73,11 +74,19 @@ EOF;
     return $taskRows;
   }
 
-  public function update(?string $contents, string $deadline, int $id)
+  public function update(int $id, string $contents, int $category_id, string $deadline)
   {
-    $sql = "UPDATE tasks SET deadline = :deadline, contents = :contents WHERE id = :id";
+    $sql = "UPDATE tasks SET deadline = :deadline, contents = :contents, category_id = :category_id WHERE id = :id";
     $stmt = $this->pdo->prepare($sql);
-    $params = array(':deadline' => $deadline, ':contents' => $contents, ':id' => $id,);
+    $params = array(':deadline' => $deadline, ':contents' => $contents, ':category_id' => $category_id, ':id' => $id,);
+    $stmt->execute($params);
+  }
+
+  public function updateStatus(int $id, int $status)
+  {
+    $sql = "UPDATE tasks SET status = :status WHERE id = :id";
+    $stmt = $this->pdo->prepare($sql);
+    $params = array(':id' => $id, ':status' => $status,);
     $stmt->execute($params);
   }
 
@@ -87,5 +96,27 @@ EOF;
     $stmt = $this->pdo->prepare($sql);
     $stmt->bindValue(':id', $id);
     $stmt->execute();
+  }
+
+  public function findById(int $id): ?TaskRaw
+  {
+    $sql = "SELECT * FROM tasks WHERE id = :id";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->bindValue(':id', $id);
+    $stmt->execute();
+    $task = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($task === false) return null;
+
+    return new TaskRaw(
+      $task['id'],
+      $task['user_id'],
+      $task['status'],
+      $task['contents'],
+      $task['category_id'],
+      $task['deadline'],
+      $task['created_at'],
+      $task['updated_at']
+    );
   }
 }

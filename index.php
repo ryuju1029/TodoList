@@ -7,6 +7,7 @@ $user_id = $_SESSION['id'];
 $status = 0;
 if (isset($_POST['incomplete'])) $status = 0;
 if (isset($_POST['completion'])) $status = 1;
+
 $taskDao = new TaskDao();
 $tasks = $taskDao->findAllByStatus($status, $user_id);
 ?>
@@ -20,46 +21,49 @@ $tasks = $taskDao->findAllByStatus($status, $user_id);
       <button type="submit" name="completion">完了</button>
     </form>
   </div>
-  <table align="center" class="categoryTable">
-    <tr>
-      <td colspan="3">
-        <?php if ($status == 0) : ?>
-          <h1>未完了タスク一覧</h1>
-        <?php endif; ?>
-        <?php if ($status == 1) : ?>
-          <h1>完了タスク一覧</h1>
-        <?php endif; ?>
-      </td>
-    </tr>
-    <tr>
-      <td><a>タスク名</a></td>
-      <td><a>締め切り</a></td>
-      <td><a>カテゴリー</a></td>
-    </tr>
-    <?php foreach ($tasks as $task) : ?>
+  <form action="updateStatus.php" method="post">
+    <table align="center" class="categoryTable">
+      <tr>
+        <td colspan="3">
+          <?php if ($status == 0) : ?>
+            <h1>未完了タスク一覧</h1>
+          <?php endif; ?>
+          <?php if ($status == 1) : ?>
+            <h1>完了タスク一覧</h1>
+          <?php endif; ?>
+        </td>
+      </tr>
+      <tr>
+        <td><a>タスク名</a></td>
+        <td><a>締め切り</a></td>
+        <td><a>カテゴリー</a></td>
+      </tr>
+      <?php foreach ($tasks as $task) : ?>
+        <input type="hidden" name="id" value="<?php if (!empty($task->id())) echo (htmlspecialchars($task->id(), ENT_QUOTES, 'UTF-8')); ?>">
         <tr>
           <td><?php echo $task->contents(); ?></td>
           <td><?php echo $task->deadline(); ?></td>
-          <td><?php echo $task->name(); ?></td>
-          <!-- カテゴリーのIDが入ってしまっている -->
-          <td><?php echo $task->id(); ?></td>
+          <td><?php echo $task->categoryName(); ?></td>
           <td>
             <?php if ($status == 0) : ?>
-              <a>完了</a>
+              <a type="submit" href="/ToDo/updateStatus.php?id=<?php echo $task->id(); ?>">完了</a>
             <?php endif; ?>
           </td>
           <td>
             <?php if ($status == 1) : ?>
-              <a>未完了</a>
+              <a type="submit" href="/ToDo/updateStatus.php?id=<?php echo $task->id(); ?>">未完了</a>
             <?php endif; ?>
           </td>
 
           <td>
             <a href="/ToDo/edit.php?id=<?php echo $task->id(); ?>">編集</a>
           </td>
-          <td>削除</td>
+          <td>
+            <a href="/ToDo/delete.php?id=<?php echo $task->id(); ?>">削除</a>
+          </td>
 
         </tr>
-    <?php endforeach; ?>
-  </table>
+      <?php endforeach; ?>
+    </table>
+  </form>
 </div>

@@ -1,8 +1,10 @@
 <?php
 require_once(__DIR__ . '/Dao/TaskDao.php');
+require_once(__DIR__ . '/Lib/Redirect.php');
 $contents = filter_input(INPUT_POST, "contents");
-$title = filter_input(INPUT_POST, "deadline");
+$deadline = filter_input(INPUT_POST, "deadline");
+$category_id = filter_input(INPUT_POST, "category_id");
 $id = filter_input(INPUT_POST, "id");
 $taskDao = new TaskDao();
-$taskDao->update($deadline, $contents, $id);
-header('Location: mypage.php');
+$taskDao->update($id, $contents, $category_id, $deadline);
+Redirect::handler('/ToDo/index.php');
