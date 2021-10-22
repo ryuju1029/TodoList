@@ -9,6 +9,7 @@ if (isset($_POST['incomplete'])) $status = 0;
 if (isset($_POST['completion'])) $status = 1;
 $taskDao = new TaskDao();
 $contents = filter_input(INPUT_POST, "contents");
+$order = filter_input(INPUT_POST, "order") == "asc" ? "asc" : "desc";
 if (!empty($contents)) $tasks = $taskDao->SearchByTask($status, $user_id, $contents);
 if (empty($contents)) $tasks = $taskDao->findAllByStatus($status, $user_id);
 ?>
@@ -24,6 +25,10 @@ if (empty($contents)) $tasks = $taskDao->findAllByStatus($status, $user_id);
     <form action="index.php" method="POST">
       <input type="text" name="contents" placeholder="キーワードを入力">
       <input type="submit" value="検索">
+    </form>
+    <form action="index.php" method="POST">
+      <button type="submit" name="order" value="asc">締切昇降順</button>
+      <button type="submit" name="order" value="desc">締切降下順</button>
     </form>
   </div>
 

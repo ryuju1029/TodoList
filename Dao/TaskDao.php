@@ -27,7 +27,7 @@ final class TaskDao extends Dao
     $stmt->execute();
   }
 
-  public function findAllByStatus($status, $user_id): array
+  public function findAllByStatus($status, $user_id): array //$order
   {
     $sql = <<<EOF
       SELECT 
@@ -44,14 +44,19 @@ final class TaskDao extends Dao
         tasks t
       JOIN 
         categories c 
-      ON t.category_id = c.id 
+      ON 
+        t.category_id = c.id 
       WHERE 
         t.status = :status 
-        AND t.user_id = :user_id
+      AND
+        t.user_id = :user_id
 EOF;
+    //ORDER BY t.created_at . :order
+
     $stmt = $this->pdo->prepare($sql);
     $stmt->bindValue(':status', $status);
     $stmt->bindValue(':user_id', $user_id);
+    //$stmt->bindValue(':order', $order);
     $stmt->execute();
     $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
