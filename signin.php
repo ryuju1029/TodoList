@@ -14,7 +14,10 @@ $errors = $session->getErrorsWithDestroy();
       </tr>
       <tr>
         <td align=left>
-          <?php if (isset($errors['email'])) : ?>
+          <?php if (!empty($errors['AccountMismatch'])) : ?>
+            <li><?php echo $errors['AccountMismatch']; ?></li>
+          <?php endif; ?>
+          <?php if (!empty($errors['email'])) : ?>
             <li><?php echo $errors['email']; ?></li>
           <?php endif; ?>
         </td>
@@ -24,7 +27,7 @@ $errors = $session->getErrorsWithDestroy();
       </tr>
       <tr>
         <td align=left>
-          <?php if (isset($errors['password'])) : ?>
+          <?php if (!empty($errors['password'])) : ?>
             <li><?php echo $errors['password']; ?></li>
           <?php endif; ?>
         </td>

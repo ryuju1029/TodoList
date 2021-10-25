@@ -5,10 +5,7 @@ require_once(__DIR__ . '/Lib/Session.php');
 
 $email = filter_input(INPUT_POST, "email");
 $password = filter_input(INPUT_POST, "password");
-
-
 $session = Session::getInstance();
-
 $errors = [];
 
 if (empty($email)) $errors['email'] = "Emailを入力してください";
@@ -26,15 +23,15 @@ $user = $userDao->emailsignin($email);
 // ガード節
 // ユーザーが見つからなかったとき
 if (empty($user)) {
-  $errorsEmail = "アカウント情報が一致しません";
-  $_SESSION['errorsEmail'] = $errorsEmail;
+  $errors['AccountMismatch'] = "アカウント情報が一致しません";
+  $session->setErrors($errors);
   Redirect::handler('/ToDo/signin.php');
 }
 
 // 指定したハッシュがパスワードにマッチしているかチェック
 if (!password_verify($password, $user->password())) {
-  $errorsPassword =  "アカウント情報が一致しません";
-  $_SESSION['errorsPassword'] = $errorsPassword;
+  $errors['AccountMismatch'] = "アカウント情報が一致しません";
+  $session->setErrors($errors);
   Redirect::handler('/ToDo/signin.php');
 }
 
