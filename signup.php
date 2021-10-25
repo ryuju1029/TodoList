@@ -1,12 +1,8 @@
 <?php
 require_once(__DIR__ . '/Lib/Session.php');
 
-session_start();
 $session = Session::getInstance();
-$errorName = $session->getErrorsNameWithDestroy();
-$errorEmail = $session->getErrorsEmailWithDestroy();
-$errorPassword = $session->getErrorsPasswordWithDestroy();
-$errorPasswordConfirm = $session->getErrorsPasswordConfirmWithDestroy();
+$errors = $session->getErrorsWithDestroy();
 ?>
 
 <link rel="stylesheet" href="style.css">
@@ -21,8 +17,8 @@ $errorPasswordConfirm = $session->getErrorsPasswordConfirmWithDestroy();
       </tr>
       <tr>
         <td align=left>
-          <?php if (isset($errorName)) : ?>
-            <li><?php echo $errorName; ?></li>
+          <?php if (!empty($errors['name'])) : ?>
+            <li><?php echo $errors['name']; ?></li>
           <?php endif; ?>
         </td>
       </tr>
@@ -31,8 +27,8 @@ $errorPasswordConfirm = $session->getErrorsPasswordConfirmWithDestroy();
       </tr>
       <tr>
         <td align=left>
-          <?php if (isset($errorEmail)) : ?>
-            <li><?php echo $errorEmail; ?></li>
+          <?php if (!empty($errors['email'])) : ?>
+            <li><?php echo $errors['email']; ?></li>
           <?php endif; ?>
         </td>
       </tr>
@@ -40,16 +36,16 @@ $errorPasswordConfirm = $session->getErrorsPasswordConfirmWithDestroy();
         <td class="sigcontent"><input type="text" name="email" placeholder="Email" style="width:300px;"></td>
       </tr>
       <td align=left>
-        <?php if (isset($errorPassword)) : ?>
-          <li><?php echo $errorPassword; ?></li>
+        <?php if (!empty($errors['password'])) : ?>
+          <li><?php echo $errors['password']; ?></li>
         <?php endif; ?>
       </td>
       <tr>
         <td class="sigcontent"><input type="password" name="password" placeholder="Password" style="width:300px;"></td>
       </tr>
       <td align=left>
-        <?php if (isset($errorPasswordConfirm)) : ?>
-          <li><?php echo $errorPasswordConfirm; ?></li>
+        <?php if (!empty($errors['passwordConfirm'])) : ?>
+          <li><?php echo $errors['passwordConfirm']; ?></li>
         <?php endif; ?>
         <tr>
           <td class="sigcontent"><input type="password" name="password_confirm" placeholder="Password確認" style="width:300px;"></td>

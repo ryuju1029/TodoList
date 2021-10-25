@@ -2,11 +2,8 @@
 require_once('header.php');
 require_once(__DIR__ . '/Dao/CategoryDao.php');
 require_once(__DIR__ . '/Lib/Session.php');
-session_start();
-
 $session = Session::getInstance();
-$errorContent = $session->getErrorContentWithDestroy();
-$errorDeadline = $session->getErrorDeadlineWithDestroy();
+$errors = $session->getErrorsWithDestroy();
 
 $user_id = $session->get('id');
 
@@ -26,8 +23,8 @@ $categories = $CategoryDao->findAll($user_id);
       </tr>
       <tr>
         <td></td>
-        <td><?php if (isset($errorContent)) : ?> <li><?php echo $errorContent; ?></li> <?php endif; ?></td>
-        <td><?php if (isset($errorDeadline)) : ?> <li><?php echo $errorDeadline; ?></li> <?php endif; ?></td>
+        <td><?php if (!empty($errors['content'])) : ?> <li><?php echo $errors['content']; ?></li> <?php endif; ?></td>
+        <td><?php if (!empty($errors['deadline'])) : ?> <li><?php echo $errors['deadline']; ?></li> <?php endif; ?></td>
       </tr>
       <tr>
         <td>

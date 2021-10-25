@@ -1,7 +1,9 @@
 <?php
 require_once(__DIR__ . '/../header.php');
 require_once(__DIR__ . '/../Dao/CategoryDao.php');
-session_start();
+require_once(__DIR__ . '/../Lib/Session.php');
+$session = Session::getInstance();
+$errors = $session->getErrorsWithDestroy();
 $user_id = $_SESSION['id'];
 $CategoryDao = new CategoryDao();
 $Categories = $CategoryDao->findAll($user_id);
@@ -14,6 +16,13 @@ $Categories = $CategoryDao->findAll($user_id);
       <tr>
         <td colspan="3">
           <h1>カテゴリ一覧</h1>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <?php if (!empty($errors['name'])) : ?>
+            <li><?php echo $errors['name']; ?></li>
+          <?php endif; ?>
         </td>
       </tr>
       <tr>
