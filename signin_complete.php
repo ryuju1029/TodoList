@@ -36,6 +36,5 @@ if (!password_verify($password, $user->password())) {
 }
 
 // DBのユーザー情報をセッションに保存
-$_SESSION['id'] = $user->id();
-$_SESSION['name'] = $user->name();
+$session->setAuth($user->id(), $user->name());
 Redirect::handler('/ToDo/index.php');
