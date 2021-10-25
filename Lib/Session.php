@@ -65,7 +65,8 @@ final class Session
 
     public function setAuth(int $id, string $name): void
     {
-        
+        $_SESSION['id'] = $id;
+        $_SESSION['name'] = $name;
     }
 
 
