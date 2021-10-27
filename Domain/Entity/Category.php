@@ -1,16 +1,21 @@
 <?php
+require_once(__DIR__ . '/../ValueObject/CategoryId.php');
+require_once(__DIR__ . '/../ValueObject/UserId.php');
 
 final class Category
 {
   private $id;
-  private $UserId;
+  private $userId;
+  private $name;
 
   public function __construct(
     CategoryId $id,
-    CategoryUserId $UserId
+    UserId $userId,
+    string $name
   ) {
     $this->id = $id;
-    $this->UserId = $UserId;
+    $this->userId = $userId;
+    $this->name = $name;
   }
 
   public function id(): CategoryId
@@ -18,8 +23,13 @@ final class Category
     return $this->id;
   }
 
-  public function UserId(): CategoryUserId
+  public function userId(): UserId
   {
-    return $this->UserId;
+    return $this->userId;
+  }
+
+  public function name(): string
+  {
+    return $this->name;
   }
 }

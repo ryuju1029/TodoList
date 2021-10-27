@@ -36,7 +36,7 @@ final class CategoryDao extends Dao
     return $categoriesRaws;
   }
 
-  public function findById(int $id): CategoryRaws
+  public function findById(int $id): ?CategoryRaws
   {
     $sql = "SELECT * FROM categories WHERE id = :id";
     $stmt = $this->pdo->prepare($sql);

@@ -11,7 +11,7 @@ $taskDao = new TaskDao();
 $contents = filter_input(INPUT_POST, "contents");
 $order = filter_input(INPUT_POST, "order") == "asc" ? "asc" : "desc";
 if (!empty($contents)) $tasks = $taskDao->SearchByTask($status, $user_id, $contents);
-if (empty($contents)) $tasks = $taskDao->findAllByStatus($status, $user_id);
+if (empty($contents)) $tasks = $taskDao->findAllByStatus($status, $user_id, $order);
 ?>
 
 <link rel="stylesheet" href="/ToDo/style.css">
