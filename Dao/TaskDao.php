@@ -27,7 +27,7 @@ final class TaskDao extends Dao
     $stmt->execute();
   }
 
-  public function findAllByStatus($status, $user_id): array //$order
+  public function findAllByStatus(int $status, int $user_id, string $order): array
   {
     $sql = <<<EOF
       SELECT 
@@ -50,13 +50,12 @@ final class TaskDao extends Dao
         t.status = :status 
       AND
         t.user_id = :user_id
+      ORDER BY t.deadline {$order}
 EOF;
-    //ORDER BY t.created_at . :order
 
     $stmt = $this->pdo->prepare($sql);
     $stmt->bindValue(':status', $status);
     $stmt->bindValue(':user_id', $user_id);
-    //$stmt->bindValue(':order', $order);
     $stmt->execute();
     $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
