@@ -29,4 +29,38 @@ final class CategoryRepository
       $categoryRaw->name()
     );
   }
+
+  public function findAll(UserId $userId)
+  {
+    $categoryRaws = $this->cateogryDao->findAll($userId->value());
+
+    if ($categoryRaws == false) return [];
+
+    $categoriesRaws = [];
+    foreach ($categoriesRaws as $category) {
+      $categoryId = new CategoryId($category->id());
+      $userId = new UserId($category->userId());
+      $categoriesRaws[] = new Category(
+        $categoryId,
+        $userId,
+        $category->name()
+      );
+    }
+    return $categoriesRaws;
+  }
+
+  public function findByName(string $name): ?Category
+  {
+    $categoryRaw = $this->cateogryDao->findByName($name);
+
+    if (is_null($categoryRaw)) return null;
+
+    $categoryId = new CategoryId($categoryRaw->id());
+    $userId = new UserId($categoryRaw->userId());
+    return new Category(
+      $categoryId,
+      $userId,
+      $categoryRaw->name()
+    );
+  }
 }

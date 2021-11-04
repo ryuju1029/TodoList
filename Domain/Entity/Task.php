@@ -3,24 +3,29 @@
 final class Task
 {
     private $id;
-    private $UserId;
-    private $Status;
-    private $CategoryId;
-    private $Deadline;
+    private $userId;
+    private $status;
+    private $contents;
+    private $categoryId;
+    private $deadline;
+    private $createdAt;
 
     public function __construct(
         TaskId $id,
-        TaskUserId $UserId,
-        TaskStatus $Status,
-        TaskCategoryId $CategoryId,
-        TaskDeadline $Deadline
+        UserId $userId,
+        TaskStatus $status,
+        TaskContent $contents,
+        TaskCategoryId $categoryId,
+        TaskDeadline $deadline,
+        TaskCreatedAt $createdAt
     )
 
     {
         $this->id = $id;
-        $this->UserId = $UserId;
-        $this->Status = $Status;
-        $this->Deadline = $Deadline;
+        $this->userId = $userId;
+        $this->status = $status;
+        $this->contents = $contents;
+        $this->deadline = $deadline;
     }
 
     public function id(): TaskId
@@ -28,23 +33,33 @@ final class Task
         return $this->id;
     }
 
-    public function UserId(): TaskUserId
+    public function userId(): UserId
     {
-        return $this->UserId;
+        return $this->userId;
     }
 
-    public function Status(): TaskStatus
+    public function status(): TaskStatus
     {
-        return $this->Status;
+        return $this->status;
     }
 
-    public function CategoryId(): TaskCategoryId
+    public function contents(): TaskContent
     {
-        return $this->CategoryId;
+        return $this->contents;
     }
 
-    public function Deadline(): TaskDeadline
+    public function categoryId(): TaskCategoryId
     {
-        return $this->Deadline;
+        return $this->categoryId;
+    }
+
+    public function deadline(): TaskDeadline
+    {
+        return $this->deadline;
+    }
+
+    public function createdAt(): TaskCreatedAt
+    {
+        return $this->createdAt;
     }
 }

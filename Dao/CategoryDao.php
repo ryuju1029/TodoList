@@ -55,7 +55,7 @@ final class CategoryDao extends Dao
     );
   }
 
-  public function findByName(string $name): CategoryRaws
+  public function findByName(string $name): ?CategoryRaws
   {
     $sql = "SELECT * FROM categories WHERE name = :name";
     $stmt = $this->pdo->prepare($sql);
