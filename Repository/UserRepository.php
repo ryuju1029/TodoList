@@ -16,7 +16,7 @@ final class UserRepository
   {
     $userRaw = $this->userDao->findByEmail($email->value());
 
-    if ($userRaw == false) return null;
+    if ($userRaw === false) return null;
 
     $userId = new UserId($userRaw->id());
     $userName = new UserName($userRaw->name());
