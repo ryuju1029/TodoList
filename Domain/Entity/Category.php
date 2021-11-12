@@ -1,6 +1,7 @@
 <?php
 require_once(__DIR__ . '/../ValueObject/CategoryId.php');
 require_once(__DIR__ . '/../ValueObject/UserId.php');
+require_once(__DIR__ . '/../ValueObject/CategoryName.php');
 
 final class Category
 {
@@ -11,7 +12,7 @@ final class Category
   public function __construct(
     CategoryId $id,
     UserId $userId,
-    string $name
+    categoryName $name
   ) {
     $this->id = $id;
     $this->userId = $userId;
@@ -28,7 +29,7 @@ final class Category
     return $this->userId;
   }
 
-  public function name(): string
+  public function name(): categoryName
   {
     return $this->name;
   }

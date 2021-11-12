@@ -6,30 +6,22 @@ require_once(__DIR__ . '/../ValueObject/UserPassword.php');
 
 
 /**
- * 保存済みのUserエンティティ
+ * 会員登録時のUserエンティティ
  */
-final class User
+final class NewUser
 {
-  private $id;
   private $name;
   private $email;
   private $password;
 
   public function __construct(
-    UserId $id,
     UserName $name,
     UserEmail $email,
     UserPassword $password
   ) {
-    $this->id = $id;
     $this->name = $name;
     $this->email = $email;
     $this->password = $password;
-  }
-
-  public function id(): UserId
-  {
-    return $this->id;
   }
 
   public function name(): UserName
@@ -45,16 +37,5 @@ final class User
   public function password(): UserPassword
   {
     return $this->password;
-  }
-
-  /**
-   * ユーザーが入力したパスワードを検証する。
-   *
-   * @param string $inputPassword 入力されたパスワード
-   * @return boolean パスワードが正しければtrue
-   */
-  public function verifyPassword(string $inputPassword): bool
-  {
-    return password_verify($inputPassword, $this->password->value());
   }
 }

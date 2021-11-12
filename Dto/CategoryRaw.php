@@ -11,13 +11,13 @@ final class CategoryRaws
   public function __construct(
     int $id,
     string $name,
-    string $userId,
+    int $userId,
     string $createdAt,
     string $updatedAt
   ) {
     $this->id = $id;
     $this->name = $name;
-    $this->email = $userId;
+    $this->userId = $userId;
     $this->createdAt = $createdAt;
     $this->updatedAt = $updatedAt;
   }
@@ -32,7 +32,7 @@ final class CategoryRaws
     return $this->name;
   }
 
-  public function userId(): string
+  public function userId(): int
   {
     return $this->userId;
   }

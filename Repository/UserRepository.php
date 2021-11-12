@@ -16,7 +16,7 @@ final class UserRepository
   {
     $userRaw = $this->userDao->findByEmail($email->value());
 
-    if ($userRaw === false) return null;
+    if (is_null($userRaw)) return null;
 
     $userId = new UserId($userRaw->id());
     $userName = new UserName($userRaw->name());
@@ -31,22 +31,11 @@ final class UserRepository
     );
   }
 
-  public function emailsignin(UserEmail $email): ?UserRaw
+  public function create(NewUser $user): void
   {
-    $userRaw = $this->userDao->emailsignin($email->value());
-
-    if ($userRaw === false) return null;
-
-    $userId = new UserId($userRaw->id());
-    $userName = new UserName($userRaw->name());
-    $userEmail = new UserEmail($userRaw->email());
-    $userPassword = new UserPassword($userRaw->password());
-
-    return new User(
-      $userId,
-      $userName,
-      $userEmail,
-      $userPassword
-    );
+    $name = $user->name()->value();
+    $email = $user->email()->value();
+    $password = $user->password()->value();
+    $this->userDao->createUser($name, $email, $password);
   }
 }
