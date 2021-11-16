@@ -6,6 +6,7 @@ $session = Session::getInstance();
 $errors = $session->getErrorsWithDestroy();
 $userId = $session->get('id');
 $categoryRepository = new CategoryRepository();
+$userId = new UserId($userId);
 $categories = $categoryRepository->findAll($userId);
 ?>
 

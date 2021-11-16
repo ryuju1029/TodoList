@@ -32,9 +32,9 @@ final class CategoryRepository
     );
   }
 
-  public function findAll(int $userId)
+  public function findAll(UserId $userId)
   {
-    $categoryRaws = $this->categoryDao->findAll($userId);
+    $categoryRaws = $this->categoryDao->findAll($userId->value());
     if ($categoryRaws == null) return [];
     foreach ($categoryRaws as $category) {
       $categoryId = new CategoryId($category->id());
