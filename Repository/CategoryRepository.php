@@ -36,7 +36,6 @@ final class CategoryRepository
   {
     $categoryRaws = $this->categoryDao->findAll($userId);
     if ($categoryRaws == null) return [];
-    //$categoryRaws = [];
     foreach ($categoryRaws as $category) {
       $categoryId = new CategoryId($category->id());
       $categoryName = new CategoryName($category->name());

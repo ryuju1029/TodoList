@@ -1,17 +1,12 @@
 <?php
 require_once('header.php');
-//require_once(__DIR__ . '/Dao/CategoryDao.php');
-require_once(__DIR__ . '/Domain/Entity/User.php');
 require_once(__DIR__ . '/Lib/Session.php');
 require_once(__DIR__ . '/Repository/CategoryRepository.php');
 $session = Session::getInstance();
 $errors = $session->getErrorsWithDestroy();
-
 $userId = $session->get('id');
-//$CategoryDao = new CategoryDao();
 $categoryRepository = new CategoryRepository();
 $categories = $categoryRepository->findAll($userId);
-//$categories = $CategoryDao->findAll($user_id);
 ?>
 
 <link rel="stylesheet" href="/ToDo/style.css">

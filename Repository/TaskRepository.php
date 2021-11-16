@@ -91,4 +91,9 @@ final class TaskRepository
     }
     return $taskRows;
   }
+
+  public function delete(int $id): void
+  {
+    $this->taskDao->delete($id);
+  }
 }
