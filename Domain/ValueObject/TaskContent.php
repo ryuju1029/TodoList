@@ -4,7 +4,7 @@ final class TaskContent
 {
   private $value;
 
-  public function __construct(int $value)
+  public function __construct(string $value)
   {
     if (empty($value)) {
       throw new Exception('contentは文字を入力してください');
@@ -13,7 +13,7 @@ final class TaskContent
     $this->value = $value;
   }
 
-  public function value(): int
+  public function value(): string
   {
     return $this->value;
   }

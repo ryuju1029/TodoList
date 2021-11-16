@@ -1,5 +1,6 @@
 <?php
 require_once(__DIR__ . '/../Domain/Entity/Task.php');
+require_once(__DIR__ . '/../Domain/Entity/Category.php');
 require_once(__DIR__ . '/../Dao/TaskDao.php');
 
 final class TaskRepository
@@ -23,8 +24,8 @@ final class TaskRepository
       $taskId = new TaskId($task->id());
       $userId = new UserId($task->userId());
       $status = new TaskStatus($task->status());
-      $contents = new TaskContent($task->content());
-      $categoryId = new TaskCategoryId($task->categoryId());
+      $contents = new TaskContent($task->contents());
+      $categoryId = new CategoryId($task->categoryId());
       $deadline = new TaskDeadline($task->deadline());
       $createdAt = new TaskCreatedAt($task->createdAt());
       $taskRows[] = new Task(
@@ -40,17 +41,16 @@ final class TaskRepository
     return $taskRows;
   }
 
-  public function findById(TaskId $id): ?TaskRaw
+  public function findById(TaskId $id): ?Task
   {
     $taskRaws = $this->taskDao->findById($id->value());
-
     if ($taskRaws === false) return null;
-
+ 
     $taskId = new TaskId($taskRaws->id());
     $userId = new UserId($taskRaws->userId());
     $status = new TaskStatus($taskRaws->status());
-    $contents = new TaskContent($taskRaws->content());
-    $categoryId = new TaskCategoryId($taskRaws->categoryId());
+    $contents = new TaskContent($taskRaws->contents());
+    $categoryId = new CategoryId($taskRaws->categoryId());
     $deadline = new TaskDeadline($taskRaws->deadline());
     $createdAt = new TaskCreatedAt($taskRaws->createdAt());
     return new Task(
@@ -76,7 +76,7 @@ final class TaskRepository
       $userId = new UserId($task->userId());
       $status = new TaskStatus($task->status());
       $contents = new TaskContent($task->contents());
-      $categoryId = new TaskCategoryId($task->categoryId());
+      $categoryId = new CategoryId($task->categoryId());
       $deadline = new TaskDeadline($task->deadline());
       $createdAt = new TaskCreatedAt($task->createdAt());
       $taskRows[] = new Task(
@@ -92,8 +92,8 @@ final class TaskRepository
     return $taskRows;
   }
 
-  public function delete(int $id): void
+  public function delete(taskId $id): void
   {
-    $this->taskDao->delete($id);
+    $this->taskDao->delete($id->value());
   }
 }

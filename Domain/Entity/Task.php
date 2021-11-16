@@ -1,4 +1,11 @@
 <?php
+require_once(__DIR__ . '/../ValueObject/TaskId.php');
+require_once(__DIR__ . '/../ValueObject/UserId.php');
+require_once(__DIR__ . '/../ValueObject/TaskStatus.php');
+require_once(__DIR__ . '/../ValueObject/TaskContent.php');
+require_once(__DIR__ . '/../ValueObject/CategoryId.php');
+require_once(__DIR__ . '/../ValueObject/TaskDeadline.php');
+require_once(__DIR__ . '/../ValueObject/TaskCreatedAt.php');
 
 final class Task
 {
@@ -15,7 +22,7 @@ final class Task
         UserId $userId,
         TaskStatus $status,
         TaskContent $contents,
-        TaskCategoryId $categoryId,
+        CategoryId $categoryId,
         TaskDeadline $deadline,
         TaskCreatedAt $createdAt
     )
@@ -25,7 +32,9 @@ final class Task
         $this->userId = $userId;
         $this->status = $status;
         $this->contents = $contents;
+        $this->categoryId = $categoryId;
         $this->deadline = $deadline;
+        $this->createdAt = $createdAt; 
     }
 
     public function id(): TaskId
@@ -48,7 +57,7 @@ final class Task
         return $this->contents;
     }
 
-    public function categoryId(): TaskCategoryId
+    public function categoryId(): CategoryId
     {
         return $this->categoryId;
     }

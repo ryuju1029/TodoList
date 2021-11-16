@@ -4,7 +4,7 @@ final class TaskDeadline
 {
   private $value;
 
-  public function __construct(int $value)
+  public function __construct(string $value)
   {
     if ($value < date('Y-m-d')) {
       throw new Exception('Deadlineは過ぎた日程を入力しないでください');
@@ -13,7 +13,7 @@ final class TaskDeadline
     $this->value = $value;
   }
 
-  public function value(): int
+  public function value(): string
   {
     return $this->value;
   }
