@@ -102,9 +102,28 @@ EOF;
     $stmt->execute();
   }
 
-  public function findById(int $id): ?TaskRaw
+  public function findById(int $id): ?TaskJoinCategoryRaw
   {
-    $sql = "SELECT * FROM tasks WHERE id = :id";
+    $sql = <<<EOF
+     SELECT 
+      t.id,
+      t.user_id,
+      t.contents,
+      t.status,
+      t.deadline,
+      t.created_at,
+      t.updated_at,
+      c.id as category_id,
+      c.name as category_name 
+     FROM 
+      tasks t 
+     JOIN 
+      categories c 
+     ON 
+      t.category_id = c.id 
+     WHERE
+      t.id = :id
+EOF;
     $stmt = $this->pdo->prepare($sql);
     $stmt->bindValue(':id', $id);
     $stmt->execute();
@@ -112,7 +131,7 @@ EOF;
 
     if ($task === false) return null;
 
-    return new TaskRaw(
+    return new TaskJoinCategoryRaw(
       $task['id'],
       $task['user_id'],
       $task['status'],
@@ -120,11 +139,12 @@ EOF;
       $task['category_id'],
       $task['deadline'],
       $task['created_at'],
-      $task['updated_at']
+      $task['updated_at'],
+      $task['category_name']
     );
   }
 
-  public function SearchByTask(int $status, int $user_id, string $contents)
+  public function searchByTask(int $status, int $user_id, string $contents): array
   {
     $sql = <<<EOF
      SELECT 

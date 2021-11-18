@@ -1,9 +1,9 @@
 <?php
-require_once(__DIR__ . '/Dao/UserDao.php');
-require_once(__DIR__ . '/Dao/CategoryDao.php');
-require_once(__DIR__ . '/Dao/TaskDao.php');
+require_once(__DIR__ . '/Repository/TaskRepository.php');
 require_once(__DIR__ . '/Lib/Redirect.php');
 require_once(__DIR__ . '/Lib/Session.php');
+require_once(__DIR__ . '/Domain/Entity/NewTask.php');
+
 $session = Session::getInstance();
 $errors = [];
 $user_id = $_SESSION['id'];
@@ -17,13 +17,14 @@ if (!empty($errors)){
     $session->setErrors($errors);
     Redirect::handler('/ToDo/create.php');
 }
+$userId = new UserId($user_id);
+$contents = new TaskContent($contents);
+$categoryId = new CategoryId($category_id);
+$deadline = new TaskDeadline($deadline);
+$newTask = new NewTask($userId,$contents,$categoryId,$deadline);
 
-$TaskDao = new TaskDao();
-$TaskDao->create(
-    $user_id,
-    $contents,
-    $category_id, 
-    $deadline
-);
+$taskRepository = new TaskRepository();
+$taskRepository->create($newTask);
+
 Redirect::handler('/ToDo/index.php');
 
