@@ -1,6 +1,6 @@
 <?php
 
-final class TaskCreatedAt
+final class TaskUpdateAt
 {
   private $value;
 

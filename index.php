@@ -1,17 +1,24 @@
 <?php
 require_once('header.php');
-require_once('Dao/TaskDao.php');
+//require_once('Dao/TaskDao.php');
+require_once(__DIR__ . '/Repository/TaskRepository.php');
 session_start();
 if (empty($_SESSION['id'])) header('Location: top.php');
 $user_id = $_SESSION['id'];
 $status = 0;
 if (isset($_POST['incomplete'])) $status = 0;
 if (isset($_POST['completion'])) $status = 1;
-$taskDao = new TaskDao();
+$taskRepository = new TaskRepository();
 $contents = filter_input(INPUT_POST, "contents");
 $order = filter_input(INPUT_POST, "order") == "asc" ? "asc" : "desc";
-if (!empty($contents)) $tasks = $taskDao->SearchByTask($status, $user_id, $contents);
-if (empty($contents)) $tasks = $taskDao->findAllByStatus($status, $user_id, $order);
+$taskStatus = new TaskStatus($status);
+$userId = new UserId($user_id);
+if (!empty($contents)){
+  $taskContent = new TaskContent($contents);
+  $tasks = $taskRepository->SearchByTask($taskStatus, $userId, $taskcontent);
+} 
+if (empty($contents)) $tasks = $taskRepository->findAllByStatus($taskStatus, $userId, $order);
+
 ?>
 
 <link rel="stylesheet" href="/ToDo/style.css">
@@ -52,27 +59,27 @@ if (empty($contents)) $tasks = $taskDao->findAllByStatus($status, $user_id, $ord
         <td><a>カテゴリー</a></td>
       </tr>
       <?php foreach ($tasks as $task) : ?>
-        <input type="hidden" name="id" value="<?php if (!empty($task->id())) echo (htmlspecialchars($task->id(), ENT_QUOTES, 'UTF-8')); ?>">
+        <input type="hidden" name="id" value="<?php if (!empty($task->id()->value())) echo (htmlspecialchars($task->id()->value(), ENT_QUOTES, 'UTF-8')); ?>">
         <tr>
-          <td><?php echo $task->contents(); ?></td>
-          <td><?php echo $task->deadline(); ?></td>
-          <td><?php echo $task->categoryName(); ?></td>
+          <td><?php echo $task->contents()->value(); ?></td>
+          <td><?php echo $task->deadline()->format("Y/m/d/"); ?></td>
+          <td><?php echo $task->category()->name()->value(); ?></td>
           <td>
             <?php if ($status == 0) : ?>
-              <a type="submit" href="/ToDo/updateStatus.php?id=<?php echo $task->id(); ?>">完了</a>
+              <a type="submit" href="/ToDo/updateStatus.php?id=<?php echo $task->id()->value(); ?>">完了</a>
             <?php endif; ?>
           </td>
           <td>
             <?php if ($status == 1) : ?>
-              <a type="submit" href="/ToDo/updateStatus.php?id=<?php echo $task->id(); ?>">未完了</a>
+              <a type="submit" href="/ToDo/updateStatus.php?id=<?php echo $task->id()->value(); ?>">未完了</a>
             <?php endif; ?>
           </td>
 
           <td>
-            <a href="/ToDo/edit.php?id=<?php echo $task->id(); ?>">編集</a>
+            <a href="/ToDo/edit.php?id=<?php echo $task->id()->value(); ?>">編集</a>
           </td>
           <td>
-            <a href="/ToDo/delete.php?id=<?php echo $task->id(); ?>">削除</a>
+            <a href="/ToDo/delete.php?id=<?php echo $task->id()->value(); ?>">削除</a>
           </td>
 
         </tr>

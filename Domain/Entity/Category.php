@@ -29,7 +29,7 @@ final class Category
     return $this->userId;
   }
 
-  public function name(): categoryName
+  public function name(): CategoryName
   {
     return $this->name;
   }

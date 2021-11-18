@@ -34,7 +34,7 @@ $categories = $categoryRepository->findAll($userId);
         </select>
       </td>
       <td><input type="text" name="contents" value="<?php if (!empty($task->contents())) echo (htmlspecialchars($task->contents()->value(), ENT_QUOTES, 'UTF-8')); ?>"></td>
-      <td><input type="date" name="deadline" value="<?php if (!empty($task->deadline())) echo (htmlspecialchars($task->deadline()->value(), ENT_QUOTES, 'UTF-8')); ?>"></td>
+      <td><input type="date" name="deadline" value="<?php if (!empty($task->deadline())) echo (htmlspecialchars($task->deadline()->format("Y/m/d/"), ENT_QUOTES, 'UTF-8')); ?>"></td>
       <td><button type="submit" name="button">追加</button></td>
   </table>
 
