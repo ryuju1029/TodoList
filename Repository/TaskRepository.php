@@ -19,10 +19,25 @@ final class TaskRepository
     // TODO: DI(依存性注入)ができていないので、ちょっと良くない
     $this->taskDao = new TaskDao();
   }
-  
-  public function create(NewTask $newTask):void
+
+  public function create(NewTask $newTask): void
   {
-    $this->taskDao->create($newTask->userId()->value(),$newTask->contents()->value(), $newTask->categoryId()->value(), $newTask->deadline()->value());
+    $this->taskDao->create(
+      $newTask->userId()->value(),
+      $newTask->contents()->value(),
+      $newTask->categoryId()->value(),
+      $newTask->deadline()->value()
+    );
+  }
+
+  public function update(Task $task)
+  {
+    $this->taskDao->update(
+      $task->Id()->value(),
+      $task->contents()->value(),
+      $task->category()->id()->value(),
+      $task->deadline()->format('Y-m-d')
+    );
   }
 
   public function findAllByStatus(TaskStatus $status, UserId $userId, string $order): array

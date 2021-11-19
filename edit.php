@@ -1,9 +1,8 @@
 <?php
-//require_once(__DIR__ . '/Dao/TaskDao.php');
-require_once(__DIR__ . '/Dao/CategoryDao.php');
 require_once(__DIR__ . '/Lib/Session.php');
 require_once(__DIR__ . '/Repository/TaskRepository.php');
 require_once(__DIR__ . '/Repository/CategoryRepository.php');
+require_once(__DIR__ . '/Lib/Session.php');
 
 $id = filter_input(INPUT_GET, "id");
 
@@ -15,7 +14,6 @@ $user_id = $session->get('id');
 $categoryRepository = new CategoryRepository();
 $userId = new UserId($user_id);
 $categories = $categoryRepository->findAll($userId);
-
 ?>
 <link rel="stylesheet" href="/ToDo/style.css">
 
@@ -23,6 +21,7 @@ $categories = $categoryRepository->findAll($userId);
 
 <form action="update.php" method="post">
   <input type="hidden" name="id" value="<?php if (!empty($task->id()->value())) echo (htmlspecialchars($task->id()->value(), ENT_QUOTES, 'UTF-8')); ?>">
+  <input type="hidden" name="status" value="<?php if (!empty($task->status()->value())) echo (htmlspecialchars($task->status()->value(), ENT_QUOTES, 'UTF-8')); ?>">
   <table align="center">
     <tr>
       <td>

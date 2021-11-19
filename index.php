@@ -1,6 +1,5 @@
 <?php
 require_once('header.php');
-//require_once('Dao/TaskDao.php');
 require_once(__DIR__ . '/Repository/TaskRepository.php');
 session_start();
 if (empty($_SESSION['id'])) header('Location: top.php');
