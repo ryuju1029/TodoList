@@ -16,8 +16,6 @@ final class Task
     private $contents;
     private $category;
     private $deadline;
-    private $createdAt;
-    private $updateAt;
 
     public function __construct(
         TaskId $id,
@@ -25,9 +23,7 @@ final class Task
         TaskStatus $status,
         TaskContent $contents,
         Category $category,
-        DateTime $deadline,
-        TaskCreatedAt $createdAt,
-        TaskUpdateAt $updateAt
+        $deadline,
     ) {
         $this->id = $id;
         $this->userId = $userId;
@@ -35,8 +31,6 @@ final class Task
         $this->contents = $contents;
         $this->category = $category;
         $this->deadline = $deadline;
-        $this->createdAt = $createdAt;
-        $this->updateAt = $updateAt;
     }
 
     public function id(): TaskId
@@ -67,15 +61,5 @@ final class Task
     public function deadline(): DateTime
     {
         return $this->deadline;
-    }
-
-    public function createdAt(): TaskCreatedAt
-    {
-        return $this->createdAt;
-    }
-
-    public function updateAt(): TaskUpdateAt
-    {
-        return $this->updateAt;
     }
 }
