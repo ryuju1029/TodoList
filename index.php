@@ -14,7 +14,7 @@ $taskStatus = new TaskStatus($status);
 $userId = new UserId($user_id);
 if (!empty($contents)){
   $taskContent = new TaskContent($contents);
-  $tasks = $taskRepository->SearchByTask($taskStatus, $userId, $taskcontent);
+  $tasks = $taskRepository->SearchByTask($taskStatus, $userId, $taskContent);
 } 
 if (empty($contents)) $tasks = $taskRepository->findAllByStatus($taskStatus, $userId, $order);
 
