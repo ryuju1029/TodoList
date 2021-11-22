@@ -119,4 +119,9 @@ final class TaskRepository
   {
     $this->taskDao->delete($id->value());
   }
+
+  public function updateStatus(TaskId $id, TaskStatus $taskStatus)
+  {
+    $this->taskDao->updateStatus($id->value(), $taskStatus->value());
+  }
 }
