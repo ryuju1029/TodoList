@@ -16,6 +16,11 @@ final class CategoryRepository
     $this->categoryDao = new CategoryDao();
   }
 
+  public function createCategories(CategoryName $name, UserId $userId)
+  {
+    $this->categoryDao->createCategories($name->value(), $userId->value());
+  }
+
   public function findById(CategoryId $id): ?Category
   {
     $categoryRaw = $this->categoryDao->findById($id->value());
@@ -64,5 +69,15 @@ final class CategoryRepository
       $userId,
       $categoryName
     );
+  }
+
+  public function update(CategoryName $name, CategoryId $id)
+  {
+    $this->categoryDao->update($name->value(), $id->value());
+  }
+
+  public function delete(CategoryId $id)
+  {
+    $this->categoryDao->delete($id->value());
   }
 }

@@ -2,7 +2,7 @@
 require_once(__DIR__ . '/../Domain/Entity/NewUser.php');
 require_once(__DIR__ . '/../UseCase/UseCaseOutput/UserSignUpUseCaseOutput.php');
 
-final class UserSignUpUseCase
+final class UserSignUpFromWebUseCase
 {
   /**
    * ユーザー新規登録ユースケースを実行するために必要な入力値
