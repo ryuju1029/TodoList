@@ -1,13 +1,15 @@
 <?php
 require_once(__DIR__ . '/../header.php');
-require_once(__DIR__ . '/../Dao/CategoryDao.php');
 require_once(__DIR__ . '/../Lib/Session.php');
+require_once(__DIR__ . '/../Repository/CategoryRepository.php');
 $session = Session::getInstance();
 $errors = $session->getErrorsWithDestroy();
 $user_id = $_SESSION['id'];
-$CategoryDao = new CategoryDao();
-$Categories = $CategoryDao->findAll($user_id);
+$userId = new UserId($user_id);
+$categoryRepository = new CategoryRepository();
+$categories = $categoryRepository->findAll($userId);
 ?>
+
 <link rel="stylesheet" href="/ToDo/style.css">
 
 <div class="homeDody">
@@ -29,11 +31,11 @@ $Categories = $CategoryDao->findAll($user_id);
         <td><input type="text" name="name" placeholder="カテゴリー追加" style="width:100px;"></td>
         <td><button type="submit" name="button">追加</button></td>
       </tr>
-      <?php foreach ($Categories as $Category) : ?>
+      <?php foreach ($categories as $category) : ?>
         <tr>
-          <td><?php echo $Category->name(); ?></td>
-          <td><a href="edit.php?id=<?php echo $Category->id() ?>">編集</a></td>
-          <td><a href="delete.php?id=<?php echo $Category->id() ?>">削除</a></td>
+          <td><?php echo $category->name(); ?></td>
+          <td><a href="edit.php?id=<?php echo $category->id() ?>">編集</a></td>
+          <td><a href="delete.php?id=<?php echo $category->id() ?>">削除</a></td>
         </tr>
       <?php endforeach; ?>
   </form>

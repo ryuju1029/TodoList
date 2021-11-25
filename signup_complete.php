@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__ . '/Repository/UserRepository.php');
+require_once(__DIR__ . '/Repository/UserMysqlRepository.php');
 require_once(__DIR__ . '/Domain/Entity/User.php');
 require_once(__DIR__ . '/Lib/Redirect.php');
 require_once(__DIR__ . '/Lib/Session.php');
@@ -20,7 +20,8 @@ if ($password !== $passwordConfirm) $errors['password'] = 'passwordが一致し�
 
 
 $useCaseInput = new UserSignUpUseCaseInput($name, $email, $password);
-$useCase = new UserSignUpUseCase($useCaseInput);
+$userRepository = new UserMysqlRepository();
+$useCase = new UserSignUpUseCase($useCaseInput, $userRepository);
 $useCaseOutput = $useCase->handler();
 
 if (!$useCaseOutput->isSuccess()) {

@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__ . '/Repository/UserRepository.php');
+require_once(__DIR__ . '/Repository/UserMysqlRepository.php');
 require_once(__DIR__ . '/Lib/Redirect.php');
 require_once(__DIR__ . '/Lib/Session.php');
 require_once(__DIR__ . '/Domain/ValueObject/UserEmail.php');
@@ -17,7 +17,7 @@ if (!empty($errors)) {
   Redirect::handler('/ToDo/signin.php');
 }
 
-$userRepository = new UserRepository();
+$userRepository = new UserMysqlRepository();
 $userEmail = new UserEmail($email);
 $user = $userRepository->findByEmail($userEmail);
 

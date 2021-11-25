@@ -1,10 +1,11 @@
 <?php
 require_once(__DIR__ . '/../Domain/Entity/User.php');
 require_once(__DIR__ . '/../Dao/UserDao.php');
+require_once(__DIR__ . '/../UseCase/RepositoryInterface/UserRepository.php');
 
-final class UserRepository
+final class UserMysqlRepository implements UserRepository
 {
-  private $UserDao;
+  private $userDao;
 
   public function __construct()
   {

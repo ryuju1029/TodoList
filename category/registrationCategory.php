@@ -1,7 +1,7 @@
 <?php
-require_once(__DIR__ . '/../Dao/CategoryDao.php');
 require_once(__DIR__ . '/../Lib/Redirect.php');
 require_once(__DIR__ . '/../Lib/Session.php');
+require_once(__DIR__ . '/../Repository/CategoryRepository.php');
 $session = Session::getInstance();
 $errors = [];
 $user_id = $_SESSION['id'];
@@ -12,6 +12,9 @@ if (!empty($errors)) {
   Redirect::handler('/ToDo/category/index.php');
   die;
 }
-$CategoryDao = new CategoryDao();
-$CategoryDao->createCategories($name, $user_id);
+$userId = new UserId($user_id);
+$categoryName = new CategoryName($name);
+
+$categoryRepository = new CategoryRepository();
+$categoryRepository->createCategories($categoryName,$userId);
 Redirect::handler('/ToDo/category/index.php');
