@@ -3,6 +3,8 @@ require_once(__DIR__ . '/Repository/UserMysqlRepository.php');
 require_once(__DIR__ . '/Lib/Redirect.php');
 require_once(__DIR__ . '/Lib/Session.php');
 require_once(__DIR__ . '/Domain/ValueObject/UserEmail.php');
+require_once(__DIR__ . '/UseCase/UseCaseInput/UserSignInUseCaseInput.php');
+require_once(__DIR__ . '/UseCase/UserSignInUseCase.php');
 
 $email = filter_input(INPUT_POST, "email");
 $password = filter_input(INPUT_POST, "password");
@@ -17,26 +19,9 @@ if (!empty($errors)) {
   Redirect::handler('/ToDo/signin.php');
 }
 
+$useCaseInput = new UserSignInUseCaseInput($email, $password);
 $userRepository = new UserMysqlRepository();
-$userEmail = new UserEmail($email);
-$user = $userRepository->findByEmail($userEmail);
+$useCase = new UserSignInUseCase($useCaseInput, $userRepository, $session);
+$useCaseOutput = $useCase->handler();
 
-
-// ガード節
-// ユーザーが見つからなかったとき
-if (is_null($user)) {
-  $errors['AccountMismatch'] = "アカウント情報が一致しません";
-  $session->setErrors($errors);
-  Redirect::handler('/ToDo/signin.php');
-}
-
-// 指定したハッシュがパスワードにマッチしているかチェック
-if (!$user->verifyPassword(($password))) {
-  $errors['AccountMismatch'] = "アカウント情報が一致しません";
-  $session->setErrors($errors);
-  Redirect::handler('/ToDo/signin.php');
-}
-
-// DBのユーザー情報をセッションに保存
-$session->setAuth($user->id()->value(), $user->name()->value());
-Redirect::handler('/ToDo/index.php');
+Redirect::handler($useCaseOutput->redirectPath());
