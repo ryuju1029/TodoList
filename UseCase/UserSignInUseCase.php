@@ -22,14 +22,12 @@ final class UserSignInUseCase
   {
     if (is_null($this->existsUser())) {
       $userSignInUseCaseOutput = new UserSignInUseCaseOutput(false, 'アカウント情報が一致しません', '/ToDo/signin.php');
-      $this->session->setErrors($userSignInUseCaseOutput->message());
       return $userSignInUseCaseOutput;
     }
 
     // 指定したハッシュがパスワードにマッチしているかチェック
     if ($this->verifyPassword()) {
       $userSignInUseCaseOutput = new UserSignInUseCaseOutput(false, 'アカウント情報が一致しません', '/ToDo/signin.php');
-      $this->session->setErrors($userSignInUseCaseOutput->message());
       return $userSignInUseCaseOutput;
     }
     $this->holdUserInformation();
