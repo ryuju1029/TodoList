@@ -8,8 +8,10 @@
 
 ## 開発環境
 - Visual Studio Code
-- 言語：PHP
+- MANP
+- PHP
 - MySQL
+
 
 ## 機能一覧
 - アカウント登録機能
