@@ -23,7 +23,8 @@
 - 並び替え機能
 
 ## 実装にあたって
-- Data Access Objectを使用してDBとのやりとりをする処理をクラスや関数にまとめた。
-- Data Transfer Object　を使用してDBから持ってきた情報を連想配列から決まった型に入れ直した。
-- Sessionに入ってある値をSingleton パターンを使って実装しどこからでも値を保持できるようにしている。
+- DAO(Data Access Object)を使用してDBとのやりとりをする処理をクラスや関数にまとめた。
+- DTO(Data Transfer Object)を使用してDBから持ってきた情報を連想配列から決まった型に入れ直した。
 - Repository、interfaceを挟むことにより外の情報に依存しない設計にした。
+- Sessionに入ってある値をSingleton パターンを使って実装しどこからでも値を保持できるようにしている。
+
