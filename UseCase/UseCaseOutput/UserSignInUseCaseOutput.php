@@ -18,10 +18,9 @@ final class UserSignInUseCaseOutput
     return $this->isSuccess;
   }
 
-  public function message(): array
+  public function message(): string
   {
-    $errors['AccountMismatch'] = $this->message;
-    return $errors; 
+    return $this->message; 
   }
 
   public function redirectPath(): string

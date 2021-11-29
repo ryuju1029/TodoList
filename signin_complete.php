@@ -23,5 +23,4 @@ $useCaseInput = new UserSignInUseCaseInput($email, $password);
 $userRepository = new UserMysqlRepository();
 $useCase = new UserSignInUseCase($useCaseInput, $userRepository, $session);
 $useCaseOutput = $useCase->handler();
-$session->setErrors($useCaseOutput->message());
 Redirect::handler($useCaseOutput->redirectPath());
